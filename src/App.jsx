@@ -13,6 +13,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { useToast } from '@/components/ui/use-toast';
 import AuthPage from '@/pages/AuthPage';
 import GoogleReviews from '@/components/GoogleReviews';
+import ProtectedRoute from '@/components/ProtectedRoute';
 
 function App() {
   const [hasNewOrder, setHasNewOrder] = useState(false);
@@ -71,24 +72,26 @@ function App() {
           <Route
             path="/*"
             element={
-              <Layout 
-                hasNewOrder={hasNewOrder} 
-                clearNewOrderNotification={clearNewOrderNotification}
-                hasFailedPost={hasFailedPost}
-                clearFailedPostNotification={clearFailedPostNotification}
-              >
-                <Routes>
-                  <Route path="/" element={<Navigate to="/dashboard" replace />} />
-                  <Route path="/dashboard" element={<DashboardPage onFinalizeOrderForStockUpdate={handleFinalizeOrderForStock} />} />
-                  <Route path="/products" element={<ProductsPage />} />
-                  <Route path="/promotions" element={<PromotionsPage />} />
-                  <Route path="/schedule-posts" element={<SchedulePostsPage />} />
-                  <Route path="/reports" element={<ReportsPage />} />
-                  <Route path="/settings" element={<SettingsPage />} />
-                  <Route path="/users" element={<UsersPage />} />
-                  <Route path="/feedbacks" element={<FeedbacksPage />} />
-                </Routes>
-              </Layout>
+              <ProtectedRoute>
+                <Layout 
+                  hasNewOrder={hasNewOrder} 
+                  clearNewOrderNotification={clearNewOrderNotification}
+                  hasFailedPost={hasFailedPost}
+                  clearFailedPostNotification={clearFailedPostNotification}
+                >
+                  <Routes>
+                    <Route path="/" element={<Navigate to="/dashboard" replace />} />
+                    <Route path="/dashboard" element={<DashboardPage onFinalizeOrderForStockUpdate={handleFinalizeOrderForStock} />} />
+                    <Route path="/products" element={<ProductsPage />} />
+                    <Route path="/promotions" element={<PromotionsPage />} />
+                    <Route path="/schedule-posts" element={<SchedulePostsPage />} />
+                    <Route path="/reports" element={<ReportsPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
+                    <Route path="/users" element={<UsersPage />} />
+                    <Route path="/feedbacks" element={<FeedbacksPage />} />
+                  </Routes>
+                </Layout>
+              </ProtectedRoute>
             }
           />
         </Routes>

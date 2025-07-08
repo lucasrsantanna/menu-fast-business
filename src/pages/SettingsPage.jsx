@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -7,7 +7,7 @@ import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Settings as SettingsIcon, Upload, Copy, Save, Clock, MapPin, Route, PlusCircle, Trash2, Truck } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
-import { signOutUser } from '@/firebase';
+import { signOutUser, auth } from '@/firebase';
 import { useNavigate } from 'react-router-dom';
 
 const daysOfWeek = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
@@ -37,6 +37,12 @@ const SettingsPage = () => {
   const [minDistanceKm, setMinDistanceKm] = useState('');
   const [deliveryZones, setDeliveryZones] = useState([{ id: 'zone1', name: 'Zona 1', maxDistance: '5', fixedRate: '7.00' }]);
   const [googleMapsApiKey, setGoogleMapsApiKey] = useState('');
+  const [userInfo, setUserInfo] = useState(null);
+
+  useEffect(() => {
+    const user = auth.currentUser;
+    setUserInfo(user);
+  }, []);
 
   const handleLogoChange = (e) => {
     if (e.target.files && e.target.files[0]) {
@@ -86,6 +92,23 @@ const SettingsPage = () => {
 
   return (
     <div className="p-4 md:p-6 space-y-6">
+      {/* Bloco de informações do usuário autenticado */}
+      {userInfo && (
+        <Card className="shadow bg-card border-border mb-4">
+          <CardHeader>
+            <CardTitle className="text-foreground">Sessão do Usuário</CardTitle>
+            <CardDescription className="text-muted-foreground">
+              Sessão atual persistida do Firebase Auth
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-1">
+            <div><b>Nome:</b> {userInfo.displayName || 'Não informado'}</div>
+            <div><b>Email:</b> {userInfo.email}</div>
+            <div><b>UID:</b> {userInfo.uid}</div>
+          </CardContent>
+        </Card>
+      )}
+
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold tracking-tight text-foreground">Configurações</h1>
