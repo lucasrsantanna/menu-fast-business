@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
-import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import { getAuth, onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { signInWithGoogle } from '@/firebase';
 
 export default function ProtectedRoute({ children }) {
   const [loading, setLoading] = useState(true);
@@ -14,6 +15,15 @@ export default function ProtectedRoute({ children }) {
     });
     return () => unsubscribe();
   }, []);
+
+  const handleGoogleLogin = async () => {
+    const result = await signInWithGoogle();
+    if (result.user) {
+      // Redireciona para o dashboard ou página principal
+    } else {
+      // Mostra erro
+    }
+  };
 
   if (loading) return null; // Ou um spinner de carregamento
 

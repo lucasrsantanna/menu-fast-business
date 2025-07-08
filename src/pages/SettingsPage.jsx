@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Settings as SettingsIcon, Upload, Copy, Save, Clock, MapPin, Route, PlusCircle, Trash2, Truck } from 'lucide-react';
+import { Settings as SettingsIcon, Upload, Copy, Save, Clock, MapPin, Route, PlusCircle, Trash2, Truck, User, Mail } from 'lucide-react';
 import { useToast } from "@/components/ui/use-toast";
 import { signOutUser, auth } from '@/firebase';
 import { useNavigate } from 'react-router-dom';
@@ -92,21 +92,33 @@ const SettingsPage = () => {
 
   return (
     <div className="p-4 md:p-6 space-y-6">
-      {/* Bloco de informações do usuário autenticado */}
+      {/* Bloco de informações do usuário autenticado - visual sofisticado */}
       {userInfo && (
-        <Card className="shadow bg-card border-border mb-4">
-          <CardHeader>
-            <CardTitle className="text-foreground">Sessão do Usuário</CardTitle>
-            <CardDescription className="text-muted-foreground">
-              Sessão atual persistida do Firebase Auth
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-1">
-            <div><b>Nome:</b> {userInfo.displayName || 'Não informado'}</div>
-            <div><b>Email:</b> {userInfo.email}</div>
-            <div><b>UID:</b> {userInfo.uid}</div>
-          </CardContent>
-        </Card>
+        <div className="flex justify-center">
+          <Card className="w-full max-w-md shadow-xl bg-card border-border mb-8">
+            <CardHeader className="flex flex-col items-center gap-2">
+              {/* Foto de perfil ou ícone padrão */}
+              {userInfo.photoURL ? (
+                <img
+                  src={userInfo.photoURL}
+                  alt="Foto de perfil"
+                  className="w-20 h-20 rounded-full shadow border-4 border-primary object-cover mb-2"
+                />
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-muted flex items-center justify-center shadow border-4 border-primary mb-2">
+                  <User className="w-10 h-10 text-primary" />
+                </div>
+              )}
+              <CardTitle className="text-2xl font-bold text-foreground text-center">
+                {userInfo.displayName || 'Usuário sem nome'}
+              </CardTitle>
+              <CardDescription className="flex items-center gap-2 text-muted-foreground text-base">
+                <Mail className="w-5 h-5" />
+                {userInfo.email}
+              </CardDescription>
+            </CardHeader>
+          </Card>
+        </div>
       )}
 
       <header className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
