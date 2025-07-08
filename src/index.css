@@ -1,0 +1,113 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 220 20% 98%; /* #FAF9F6 - off-white suave */
+    --foreground: 0 0% 18%; /* #2E2E2E - cinza quase preto */
+    
+    --card: 0 0% 100%; /* Default white for cards, can be overridden if needed */
+    --card-foreground: 0 0% 18%; /* #2E2E2E */
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 18%;
+
+    --primary: 0 61% 50%; /* #D32F2F - vermelho escuro */
+    --primary-foreground: 0 0% 100%; /* White for text on primary */
+
+    --secondary: 0 0% 74%; /* #BDBDBD - botões secundários / desativados */
+    --secondary-foreground: 0 0% 18%; /* #2E2E2E */
+
+    --muted: 0 0% 93%; /* #E0E0E0 - cinza claro para bordas e fundos sutis */
+    --muted-foreground: 0 0% 40%; /* Darker gray for muted text */
+
+    --accent: 207 90% 61%; /* #42A5F5 - azul claro para destaques */
+    --accent-foreground: 0 0% 100%; /* White for text on accent */
+
+    --destructive: 0 84% 60%; /* #E53935 - for total value as requested */
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 88%; /* #E0E0E0 - cinza claro */
+    --input: 0 0% 88%; /* #E0E0E0 */
+    --ring: 0 61% 50%; /* #D32F2F - vermelho escuro for focus rings */
+
+    --radius: 0.5rem;
+
+    /* Status Kanban */
+    --status-received: 54 98% 60%; /* #FDD835 - amarelo */
+    --status-in-preparation: 33 98% 50%; /* #FB8C00 - laranja */
+    --status-ready: 123 40% 45%; /* #43A047 - verde */
+    --status-delivered: 211 78% 40%; /* #1E88E5 - azul escuro */
+
+    /* Order Type Borders */
+    --order-delivery-border: 211 78% 40%; /* #1E88E5 */
+    --order-restaurant-border: 123 40% 45%; /* #43A047 */
+  }
+
+  .dark {
+    --background: 0 0% 10%; 
+    --foreground: 0 0% 95%; 
+    
+    --card: 0 0% 15%;
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 0 0% 15%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 61% 55%; 
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 0 0% 30%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 20%;
+    --muted-foreground: 0 0% 60%;
+
+    --accent: 207 90% 65%; 
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 0 0% 25%;
+    --input: 0 0% 25%;
+    --ring: 0 61% 55%;
+
+    --status-received: 54 98% 65%;
+    --status-in-preparation: 33 98% 55%;
+    --status-ready: 123 40% 50%;
+    --status-delivered: 211 78% 45%;
+
+    --order-delivery-border: 211 78% 45%;
+    --order-restaurant-border: 123 40% 50%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar for webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: hsl(var(--muted));
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary) / 0.7);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary));
+}
